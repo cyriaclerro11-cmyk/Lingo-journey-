@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Journey — Apprends l'anglais & le mandarin</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Barre supérieure de navigation / Stats -->
+    <header class="app-header">
+        <div class="logo" id="btn-logo">
+            <span class="logo-icon">🌐</span>
+            <span class="logo-text">Language Journey</span>
+        </div>
+        
+        <div class="user-stats-bar">
+            <div class="lang-selector-top">
+                <button class="lang-btn active" data-lang="en">🇬🇧 EN</button>
+                <button class="lang-btn" data-lang="zh">🇨🇳 ZH</button>
+            </div>
+            <div class="stat-pill streak-pill">
+                🔥 <span id="header-streak">0</span> <span class="stat-label">j</span>
+            </div>
+            <div class="stat-pill xp-pill">
+                ⭐ <span id="header-xp">0</span> <span class="stat-label">XP</span>
+            </div>
+            <div class="profile-avatar" id="nav-profile-btn">👤</div>
+        </div>
+    </header>
+
+    <!-- Conteneur Principal des Vues -->
+    <main class="main-content">
+
+        <!-- 1. VUE ACCUEIL / DASHBOARD -->
+        <section id="view-home" class="view active">
+            <div class="hero-banner">
+                <h1>Language Journey</h1>
+                <p>Apprends une nouvelle langue, progresse chaque jour.</p>
+            </div>
+
+            <!-- Dashboard rapide -->
+            <div class="quick-continue-card card" id="quick-continue-box">
+                <div class="quick-info">
+                    <span class="badge" id="quick-lang-badge">🇬🇧 Anglais A1</span>
+                    <h3 id="quick-next-title">Prochaine leçon : Greetings</h3>
+                    <p id="quick-progress-text">Progression globale : 0%</p>
+                </div>
+                <button class="btn btn-primary" id="btn-continue-learning">Continuer mon apprentissage</button>
+            </div>
+
+            <!-- Cartes des Langues -->
+            <div class="language-cards-grid">
+                <div class="card lang-card" data-lang="en">
+                    <div class="card-flag">🇬🇧</div>
+                    <h2>Anglais</h2>
+                    <p class="sub-text">Learn English</p>
+                    <div class="lang-card-stats">
+                        <span>Niveau : <strong id="en-level-label">A1</strong></span>
+                        <div class="progress-bar-bg"><div class="progress-fill" id="en-progress-bar" style="width: 0%;"></div></div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary btn-select-lang" data-lang="en">Commencer</button>
+                        <button class="btn btn-secondary btn-placement-test" data-lang="en">Test de niveau</button>
+                    </div>
+                </div>
+
+                <div class="card lang-card" data-lang="zh">
+                    <div class="card-flag">🇨🇳</div>
+                    <h2>Mandarin</h2>
+                    <p class="sub-text">学中文 — Learn Mandarin</p>
+                    <div class="lang-card-stats">
+                        <span>Niveau : <strong id="zh-level-label">HSK 1</strong></span>
+                        <div class="progress-bar-bg"><div class="progress-fill" id="zh-progress-bar" style="width: 0%;"></div></div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn btn-primary btn-select-lang" data-lang="zh">Commencer</button>
+                        <button class="btn btn-secondary btn-placement-test" data-lang="zh">Test de niveau</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. VUE COURS ET MODULES -->
+        <section id="view-courses" class="view">
+            <div class="section-header">
+                <h2 id="courses-title">🇬🇧 Modules d'Anglais (A1)</h2>
+                <p>Suis les modules pas à pas pour développer tes compétences.</p>
+            </div>
+            <div class="modules-container" id="modules-list">
+                <!-- Généré dynamiquement par JavaScript -->
+            </div>
+        </section>
+
+        <!-- 3. VUE LECTURE DE LEÇON -->
+        <section id="view-lesson" class="view">
+            <div class="lesson-header">
+                <button class="btn-back" id="btn-back-courses">← Retour aux cours</button>
+                <div class="lesson-progress-indicator">
+                    <span id="lesson-step-indicator">Étape 1 / 5</span>
+                </div>
+            </div>
+
+            <div class="card lesson-card" id="lesson-content-area">
+                <!-- Injection dynamique de la leçon en cours -->
+            </div>
+
+            <div class="lesson-footer">
+                <button class="btn btn-secondary" id="btn-prev-step" style="display:none;">Précédent</button>
+                <button class="btn btn-primary" id="btn-next-step">Suivant</button>
+            </div>
+        </section>
+
+        <!-- 4. VUE TEST DE NIVEAU / EVALUATION -->
+        <section id="view-quiz" class="view">
+            <div class="quiz-container card">
+                <div class="quiz-header">
+                    <h2 id="quiz-title">Test de niveau</h2>
+                    <div class="progress-bar-bg"><div class="progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
+                </div>
+                <div id="quiz-body" class="quiz-body">
+                    <!-- Questions injectées par JS -->
+                </div>
+                <div id="quiz-feedback" class="quiz-feedback hidden"></div>
+                <div class="quiz-footer">
+                    <button class="btn btn-primary" id="btn-submit-answer">Valider</button>
+                    <button class="btn btn-primary hidden" id="btn-next-question">Question suivante</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. VUE RÉSULTATS DE TEST -->
+        <section id="view-quiz-results" class="view">
+            <div class="card results-card">
+                <div class="results-icon" id="res-icon">🏆</div>
+                <h2 id="res-title">Test terminé !</h2>
+                <p class="res-subtitle" id="res-level-output">Ton niveau estimé : A1</p>
+                
+                <div class="score-display">
+                    <span class="score-num" id="res-score-num">8/10</span>
+                    <span class="score-percent" id="res-score-percent">(80%)</span>
+                </div>
+
+                <div class="results-details card-inner">
+                    <h4>Analyse des compétences</h4>
+                    <p><strong>Points forts :</strong> <span id="res-strengths">Vocabulaire, Prononciation</span></p>
+                    <p><strong>À améliorer :</strong> <span id="res-weaknesses">Grammaire</span></p>
+                    <p><strong>Recommandation :</strong> <span id="res-recommendation">Revois le module de grammaire de base.</span></p>
+                </div>
+
+                <button class="btn btn-primary" id="btn-finish-quiz">Continuer vers mon tableau de bord</button>
+            </div>
+        </section>
+
+        <!-- 6. VUE STATISTIQUES & GRAPHIQUES -->
+        <section id="view-analytics" class="view">
+            <h2>📊 Ma Progression</h2>
+            <div class="charts-grid">
+                <div class="card chart-card">
+                    <h3>Évolution des Scores (%)</h3>
+                    <canvas id="chart-scores" width="400" height="220"></canvas>
+                </div>
+                <div class="card chart-card">
+                    <h3>Compétences Globales</h3>
+                    <canvas id="chart-skills" width="400" height="220"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. VUE RÉVISION & VOCABULAIRE -->
+        <section id="view-vocab" class="view">
+            <div class="vocab-header">
+                <h2>🧠 Mon Vocabulaire & Révisions</h2>
+                <div class="vocab-tabs">
+                    <button class="tab-btn active" id="tab-vocab-list">Mots Appris (<span id="count-vocab">0</span>)</button>
+                    <button class="tab-btn" id="tab-mistakes">Erreurs Fréquentes (<span id="count-mistakes">0</span>)</button>
+                </div>
+            </div>
+
+            <!-- Onglet Vocabulaire -->
+            <div id="panel-vocab-list" class="tab-panel active">
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Mot / Expression</th>
+                                <th>Traduction</th>
+                                <th>Pinyin / Phonétique</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="vocab-table-body">
+                            <!-- Rempli en JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Onglet Erreurs / SRS -->
+            <div id="panel-mistakes" class="tab-panel">
+                <div class="card-inner alert-box" id="mistakes-recommendation-box">
+                    💡 Tu as quelques notions à consolider. Clique sur "Réviser maintenant" pour éliminer tes erreurs !
+                </div>
+                <button class="btn btn-primary margin-v" id="btn-start-revision">Réviser maintenant</button>
+                <ul class="mistakes-list" id="mistakes-list-container">
+                    <!-- Rempli en JS -->
+                </ul>
+            </div>
+        </section>
+
+        <!-- 8. VUE PROFIL UTILISATEUR -->
+        <section id="view-profile" class="view">
+            <div class="card profile-card">
+                <div class="profile-header-large">
+                    <div class="avatar-large">👤</div>
+                    <div class="profile-title">
+                        <h2 id="profile-name">Apprenant</h2>
+                        <span class="badge" id="profile-status">Membre Actif</span>
+                    </div>
+                </div>
+
+                <div class="profile-stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-value" id="prof-xp">0</span>
+                        <span class="stat-lbl">XP Total</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value" id="prof-streak">0</span>
+                        <span class="stat-lbl">Série de Jours</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-value" id="prof-lessons">0</span>
+                        <span class="stat-lbl">Leçons Réussies</span>
+                    </div>
+                </div>
+
+                <h3>🏆 Badges & Succès</h3>
+                <div class="badges-grid" id="badges-container">
+                    <!-- Badges dynamiques -->
+                </div>
+
+                <div class="profile-actions-area">
+                    <button class="btn btn-danger" id="btn-reset-data">Réinitialiser ma progression</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Navigation Mobile en Bas -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-target="view-home">
+            <span class="nav-icon">🏠</span>
+            <span class="nav-text">Accueil</span>
+        </button>
+        <button class="nav-item" data-target="view-courses">
+            <span class="nav-icon">📚</span>
+            <span class="nav-text">Cours</span>
+        </button>
+        <button class="nav-item" data-target="view-analytics">
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">Progrès</span>
+        </button>
+        <button class="nav-item" data-target="view-vocab">
+            <span class="nav-icon">🧠</span>
+            <span class="nav-text">Révision</span>
+        </button>
+        <button class="nav-item" data-target="view-profile">
+            <span class="nav-icon">👤</span>
+            <span class="nav-text">Profil</span>
+        </button>
+    </nav>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
